@@ -1,0 +1,134 @@
+import 'package:flutter/material.dart';
+
+
+void main() {
+  runApp(EnterDetailsApp());
+}
+
+
+class EnterDetailsApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Enter Details', // Change app title here
+      theme: ThemeData(
+        primarySwatch: Colors.brown,
+      ),
+      home: UserInputForm(),
+    );
+  }
+}
+
+
+class UserInputForm extends StatefulWidget {
+  @override
+  _UserInputFormState createState() => _UserInputFormState();
+}
+
+
+class _UserInputFormState extends State<UserInputForm> {
+  final _formKey = GlobalKey<FormState>();
+ 
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _ageController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _courseCodeController = TextEditingController();
+
+
+  void _showUserData() {
+    if (_formKey.currentState!.validate()) {
+      String name = _nameController.text;
+      String age = _ageController.text;
+      String address = _addressController.text;
+      String courseCode = _courseCodeController.text;
+
+
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Your Details'),
+            content: Text('Name: $name\nAge: $age\nAddress: $address\nCourse Code: $courseCode'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Enter Details'), // Change AppBar title here
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              TextFormField(
+                controller: _nameController,
+                decoration: InputDecoration(labelText: 'Name'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your name';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: _ageController,
+                decoration: InputDecoration(labelText: 'Age'),
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your age';
+                  }
+                  if (int.tryParse(value) == null) {
+                    return 'Please enter a valid number';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: _addressController,
+                decoration: InputDecoration(labelText: 'Address'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your address';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: _courseCodeController,
+                decoration: InputDecoration(labelText: 'Course Code'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter the course code';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _showUserData,
+                child: Text('Submit'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
