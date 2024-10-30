@@ -1,0 +1,76 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(NestedLayoutApp());
+}
+
+class NestedLayoutApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text("Nested Rows and Columns"),
+        ),
+        body: Row(
+          children: <Widget>[
+            // First Column
+            Expanded(
+              child: Column(
+                children: <Widget>[
+                  // First Row in the First Column
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 244, 3, 3),
+                        border: Border.all(color: Colors.white, width: 7), // White border for the first row
+                      ),
+                      child: Center(
+                        child: Text(
+                          "Row 1, Column 1",
+                          style: TextStyle(fontSize: 24, color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ),
+                  // Second Row in the First Column
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 6, 136, 39),
+                        border: Border.all(color: Colors.white, width: 7), // White border for the second row
+                      ),
+                      child: Center(
+                        child: Text(
+                          "Row 2, Column 1",
+                          style: TextStyle(fontSize: 24, color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            // Second Column
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 15, 12, 204),
+                  border: Border.all(color: Colors.white, width: 7), // White border for the second column
+                ),
+                child: Center(
+                  child: Text(
+                    "Single Column",
+                    style: TextStyle(fontSize: 24, color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
