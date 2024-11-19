@@ -1,0 +1,67 @@
+import 'package:flutter/material.dart';
+import 'dart:math';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: AnimatedCircleScreen(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+class AnimatedCircleScreen extends StatefulWidget {
+  @override
+  _AnimatedCircleScreenState createState() => _AnimatedCircleScreenState();
+}
+
+class _AnimatedCircleScreenState extends State<AnimatedCircleScreen> {
+  double _circleSize = 200.0;
+  Color _circleColor = Colors.blue;
+
+  void _animateCircle() {
+    setState(() {
+      _circleSize = Random().nextDouble() * 200 + 50; 
+      _circleColor = Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0); // Random color
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Animated Circle Exercise'),
+        centerTitle: true,
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            AnimatedContainer(
+              duration: const Duration(seconds: 1),
+              curve: Curves.easeInOut,
+              width: _circleSize,
+              height: _circleSize,
+              decoration: BoxDecoration(
+                color: _circleColor,
+                shape: BoxShape.circle,
+              ),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _animateCircle,
+              child: const Text('Animate Circle'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
